@@ -4,13 +4,13 @@ cd $HOME
 pwd
 mkdir project1
 cd project1
-cp $HOME/path_1/ansible.cfg ./
-cp $HOME/path_1/hosts ./
+cp /etc/ansible/ansible.cfg ./
+touch hosts
 
-vi bing.yaml
-vi check.yaml
-vi hosts.yaml 
-vi report_final.sh
+vi bing.yaml ## paste the content from git
+vi check.yaml ## paste the content from git
+vi hosts.yaml ## paste the content from git
+vi report_final.sh ## paste the content from git
 
 ansible-galaxy init dit1 
 ansible-galaxy init dit2
