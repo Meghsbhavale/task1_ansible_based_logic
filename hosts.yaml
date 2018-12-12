@@ -1,0 +1,10 @@
+---
+- name: Yaml Playbook to fetch the App module version deployed on each server
+  hosts: "{{ DeployHost }}"
+  user: vagrant
+  become: yes
+  gather_facts: True
+  ignore_errors: False
+  roles:
+     - "{{ EnvName }}"
+...

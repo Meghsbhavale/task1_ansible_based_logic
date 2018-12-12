@@ -1,0 +1,10 @@
+---
+- name: Yaml Playbook to fetch the App module version deployed on each server
+  hosts: DIT1
+  user: vagrant
+  become: yes
+  #  gather_facts: False
+  ignore_errors: False
+  vars_files: var_dit1.yaml
+  roles:
+     - dit1

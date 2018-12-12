@@ -1,0 +1,67 @@
+---
+ - debug:
+     msg: "{{ DeployHost }} {{ EnvName }} {{ AppPath }} {{ LogsPath }} {{ ScriptPath }}"
+ - name: Ansible register variable basic example
+   shell: "find -name *.MF"
+   args:
+     chdir: "{{ AppPath }}"
+   register: find_output
+
+ - name: Remove the existing file {{ RemotePath }}/status.txt
+   file:
+     path: "{{ RemotePath }}/status.txt"
+     state: absent
+
+ - name: Creates directory {{ RemotePath }}
+   file:
+     path: "{{ RemotePath }}"
+     state: directory
+
+ - name: cat the file and grep only the name and version
+   shell: cat {{ AppPath }}/{{ item }} | egrep 'Module-Name|Built-Version' >> {{ RemotePath }}/status.txt
+   with_items:
+     - "{{ find_output.stdout_lines }}"
+   register: report_out
+
+
+
+ - debug:
+     msg: "shell module ended"
+
+ - debug:
+     msg: "{{ item }}"
+   with_items:
+     - "{{ report_out }}"
+
+
+
+ - name: Fethch the file from remote to localhost
+   fetch:
+     src: "{{ RemotePath }}/status.txt"
+     dest: "{{ LogsPath }}"
+     flat: yes
+
+
+ - name: Creates directory {{ ReportPath }}
+   file:
+     path: "{{ ReportPath }}"
+     state: directory
+   delegate_to: 127.0.0.1
+     
+
+ - name: Excute command on local and make csv for publish
+   shell: cat {{ LogsPath }}/status.txt |  cut -d':' -f2 | paste -d, - -|sed "s| ||g" > {{ ReportPath }}/report_{{ EnvName }}.csv
+   delegate_to: 127.0.0.1
+   
+
+     
+   
+ - name: execute content cat
+   shell: cat  {{ ReportPath }}/report_{{ EnvName }}.csv
+   delegate_to: 127.0.0.1
+   register: alpha
+   
+ - debug:
+     msg: "{{ item }}"
+   with_items:
+     - "{{ alpha }}"
