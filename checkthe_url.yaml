@@ -1,0 +1,19 @@
+---
+- name: Yaml for making the artifactory url
+  hosts: 127.0.0.1
+  become: yes
+  gather_facts: True
+  tasks:
+   - name: base url setting
+     set_fact:
+        baseurl: "http://code-artifacts.bankofamerica.com:18081/artifactory/libs-release-local-maven/com/baml/crdtctr/"
+
+   - name: setting the fact path
+     set_fact:
+        module_art: "{{ baseurl }}/api_gateway/crdtctr-{{ mod_name }}/crdtctr-{{ mod_name }}-{{ version }}.zip"
+     when: mod_name  == "api-gateway"
+
+
+   - debug:
+       msg: "{{ module_art }}"
+...
