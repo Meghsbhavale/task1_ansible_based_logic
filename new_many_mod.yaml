@@ -1,0 +1,33 @@
+
+---
+- name: Yaml Playbook to fetch the App module version deployed on each server
+  hosts: 127.0.0.1
+  become: yes
+  gather_facts: True
+  tasks:
+   - name: base url setting
+     set_fact:
+        baseurl: "http://code-artifacts.bankofamerica.com:18081/artifactory/libs-release-local-maven/com/baml/crdtctr/"
+
+
+
+   - name: setting the fact path
+     set_fact:
+        module_art: "{{ baseurl }}/{{ item.name2 }}/crdtctr-{{ item.name1 }}/crdtctr-{{ item.name1 }}-{{ version }}.zip"
+     with_items:
+       - { name1: api-gateway, name2: api_gateway }
+       - { name1: api-domain, name2: api_domain }
+       - { name1: api-sharedlib, name2: api_sharedlib }
+       - { name1: api-raml, name2: api_raml }
+       - { name1: autosys-build, name2: autosys_build }
+       - { name1: cc-api-acceptance, name2: cc_api_acceptance }
+       - { name1: cc-api-domain, name2: cc_api_domain }
+       - { name1: cc-configuration-report, name2: cc_configuration_report }
+       - { name1: cc-etl-acceptance, name2: cc_etl_acceptance }
+       
+     when: mod_name  == item.name1
+     
+
+   - debug:
+       msg: "{{ module_art }}"
+...
