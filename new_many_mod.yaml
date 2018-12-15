@@ -48,9 +48,26 @@
       msg: "{{ ver }} {{ mod }}"
 
    - name: calling the ansible playbook to make the artifactory and fetch that 
-     shell: ansible-playbook sample.yaml -e "{{ mod_name=item.mod }}" -e "{{ version=item.ver }}"
+     shell:  |
+     
+         {% for result1 in item.ver %}
+           ver1: {{ result1 }}
+           echo  {{ result1 }} >./ver1.txt
+         {% endfor %}
+         {% for result in item.mod %}
+           mod1: {{result }}
+           echo  {{ result }} >./mod1.txt
+         {% endfor %}
+         ver1=$(cat ./ver1.txt)
+         mod1=$(cat ./mod1.txt)
+         ansible-playbook sample.yaml -e "mod_name=$mod1" -e "version=$ver1"
      with_items:
        - { ver: "{{ ver.stdout_lines }}", mod: "{{ mod.stdout_lines }}" }
+     register: lockit
+     
+   - debug:
+      msg: "{{ lockit}}"
+
 
 
 ...
