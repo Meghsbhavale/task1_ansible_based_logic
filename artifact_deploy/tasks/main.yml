@@ -1,0 +1,9 @@
+---
+- name: Message 1
+  shell: echo "Master  {{ DeployHost }} {{ Module  }} {{ dest_node }} {{ server }}           {{ art_url }} "
+
+- name: Unarchive a file that needs to be downloaded (added in 2.0)
+  unarchive:
+    src: "{{ art_url }}"
+    dest: "{{ mule_home }}/apps/{{mod1}}/"
+    remote_src: yes

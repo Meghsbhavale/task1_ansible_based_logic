@@ -1,0 +1,30 @@
+---
+- name: executing the final playbook
+  hosts: "{{ DeployHost }}"
+  roles:
+    - role : artifact_deploy 
+      server: "{{ dest_node }}"  
+      art_url: "{{ Module }}"
+      mule_home: "/ciohosting/cce2e/dit1/cce2e-383-mule/"
+      when: dest_node   == 'dit1'
+
+    - role : artifact_deploy
+      server: "{{ dest_node }}"
+      art_url: "{{ Module }}"
+      mule_home: "/ciohosting/cce2e/dit2/cce2e-383-mule/"
+      when: dest_node   == 'dit2'
+
+ 
+    - role : artifact_deploy
+      server: "{{ dest_node }}"
+      art_url: "{{ Module }}"
+      mule_home: "/ciohosting/cce2e/sit1/cce2e-383-mule/"
+      when: dest_node   == 'sit1'
+
+    - role : artifact_deploy
+      server: "{{ dest_node }}"
+      art_url: "{{ Module }}"
+      mule_home: "/ciohosting/cce2e/sit2/cce2e-383-mule/"
+      when: dest_node   == 'sit2'
+
+

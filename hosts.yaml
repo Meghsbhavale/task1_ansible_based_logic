@@ -1,10 +1,15 @@
 ---
 - name: Yaml Playbook to fetch the App module version deployed on each server
   hosts: "{{ DeployHost }}"
-  user: vagrant
-  become: yes
   gather_facts: True
   ignore_errors: False
   roles:
-     - "{{ EnvName }}"
+    - role : node_fetch
+      AppPath: /ciohosting/cce2e/{{ EnvName }}/cce2e-383-mule/apps/
+      LogsPath: "{{ ansible_env.HOME }}/test/logs/{{ EnvName }}/"
+      ScriptPath: "{{ ansible_env.HOME }}/test/scripts/"
+      RemotePath: "{{ ansible_env.HOME }}/local/"
+      ReportPath: "{{ ansible_env.HOME }}/test/report/"
+
+
 ...

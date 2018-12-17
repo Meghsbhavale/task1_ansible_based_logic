@@ -1,9 +1,13 @@
 ---
+# vars file for artifact_deploy
+
+
 DeployHost: 171.135.64.241
+
 EnvName: dit1
 AppPath: /ciohosting/cce2e/dit1/cce2e-383-mule/apps/
 LogsPath: "{{ ansible_env.HOME }}/test/logs/dit1/"
 ScriptPath: "{{ ansible_env.HOME }}/test/scripts/"
 RemotePath: "{{ ansible_env.HOME }}/local/"
 ReportPath: "{{ ansible_env.HOME }}/test/report/"
-...
+

@@ -16,6 +16,10 @@
    file:
      path: "{{ RemotePath }}"
      state: directory
+ - name: Create Directory "{{ LogsPath }}"
+   file:
+     path: "{{ LogsPath }}/{{ EnvName }}/"
+     state: directory
 
  - name: cat the file and grep only the name and version
    shell: cat {{ AppPath }}/{{ item }} | egrep 'Module-Name|Built-Version' >> {{ RemotePath }}/status.txt
