@@ -15,7 +15,7 @@
    - debug:
        msg: "{{ Mercury }}"
    - name: execute report_final.sh script to generate final .csv file.
-     shell: ./report_final.sh
+     shell: ./report_final.sh "{{ dest_node }}" "{{ src_node }}"
      delegate_to: 127.0.0.1
      register: Final_CSV
 
@@ -26,8 +26,6 @@
      set_fact:
         baseurl: "http://code-artifacts.bankofamerica.com:18081/artifactory/libs-release-local-maven/com/baml/crdtctr/"
 
-   - name: here we have to get the logic for the Csv comparision
-     shell: echo "yes"
 
    - name: calling the ansible playbook to make the artifactory and fetch that
      shell: |
@@ -92,7 +90,7 @@
        executable: /bin/bash  
 
      with_lines:
-       - "cat $HOME/test/report/final/report_final.csv | grep -v 'module-name'| cut -d, -f1,3"
+       - "cat $HOME/test/report/final/report_filter.csv "
      register: lookit
 
 
