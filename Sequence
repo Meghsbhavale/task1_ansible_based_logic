@@ -1,0 +1,23 @@
+Ansible.cfg details::
+Ansible.cfg will have the location of hosts file..
+Currently the only line uncommented is of inventory=/home/username/project2/hosts
+
+====================================================================================================
+
+Hosts file will include the server address of all the servers like dit1,dit2,sit1,sit2,etc
+Currently we have entered ip for dit1 and dit2
+
+====================================================================================================
+there are two roles created called artifact_deploy and node_fetch
+------------------------------
+in artifact_deploy 
+
+In main.yml,the tasks are written to delete the older version from apps folder,create a new directory with the appmodule name with zip extension and 
+unarchive a file in apps folder and restart the mule.
+
+-------------------------------
+In node_fetch role 
+
+in main.yml ,the tasks are written to look for .MF extension file in apps folder,remove status.txt and create a new directory if not
+exists with envname in this case would be dit1 and dit2 depending on whatever parameters you give.The next task is to cat the status.txt 
+file and list the module name and built version.
